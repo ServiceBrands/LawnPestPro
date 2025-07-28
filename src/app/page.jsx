@@ -155,24 +155,24 @@ function MainComponent() {
           <p className="text-gray-600 mb-4">
             Generate a price estimate for a client's property
           </p>
-          <a
-            href="/create-estimate"
+          <button
+            onClick={() => setActiveTab("create-estimate")}
             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 inline-block"
           >
             <i className="fas fa-calculator mr-2"></i>Create Estimate
-          </a>
+          </button>
         </div>
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold mb-4">View All Estimates</h3>
           <p className="text-gray-600 mb-4">
             Review and manage existing estimates
           </p>
-          <a
-            href="/list-estimates"
+          <button
+            onClick={() => setActiveTab("view-estimates")}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block"
           >
             <i className="fas fa-list mr-2"></i>View Estimates
-          </a>
+          </button>
         </div>
       </div>
 
