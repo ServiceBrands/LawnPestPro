@@ -147,10 +147,80 @@ function MainComponent() {
       <h2 className="text-2xl font-bold text-green-800 mb-6">
         Pricing Calculator
       </h2>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">Create New Estimate</h3>
+          <p className="text-gray-600 mb-4">
+            Generate a price estimate for a client's property
+          </p>
+          <a
+            href="/create-estimate"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 inline-block"
+          >
+            <i className="fas fa-calculator mr-2"></i>Create Estimate
+          </a>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">View All Estimates</h3>
+          <p className="text-gray-600 mb-4">
+            Review and manage existing estimates
+          </p>
+          <a
+            href="/list-estimates"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block"
+          >
+            <i className="fas fa-list mr-2"></i>View Estimates
+          </a>
+        </div>
+      </div>
+
+      {/* Recent Estimates */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <p className="text-gray-600">
-          Pricing calculator feature coming soon...
-        </p>
+        <h3 className="text-lg font-semibold mb-4">Recent Estimates</h3>
+        {estimates.length === 0 ? (
+          <p className="text-gray-500">
+            No estimates yet. Create your first estimate above.
+          </p>
+        ) : (
+          <div className="space-y-3">
+            {estimates.slice(0, 3).map((estimate) => (
+              <div
+                key={estimate.id}
+                className="flex justify-between items-center p-3 bg-gray-50 rounded"
+              >
+                <div>
+                  <p className="font-medium">
+                    {clients.find((c) => c.id === estimate.client_id)?.name ||
+                      "Unknown Client"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {estimate.property_size} sq ft
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-bold text-green-600">
+                    ${estimate.total_amount}
+                  </p>
+                  <span
+                    className={`text-xs px-2 py-1 rounded ${
+                      estimate.status === "draft"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : estimate.status === "sent"
+                        ? "bg-blue-100 text-blue-800"
+                        : estimate.status === "accepted"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {estimate.status}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -160,10 +230,18 @@ function MainComponent() {
       <h2 className="text-2xl font-bold text-green-800 mb-6">
         AI Pest Identification
       </h2>
+
       <div className="bg-white rounded-lg shadow-md p-6">
-        <p className="text-gray-600">
-          AI pest identification feature coming soon...
+        <h3 className="text-lg font-semibold mb-4">Identify Pests</h3>
+        <p className="text-gray-600 mb-4">
+          Upload photos to identify pests and get treatment recommendations
         </p>
+        <a
+          href="/create-pest-identification"
+          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 inline-block"
+        >
+          <i className="fas fa-camera mr-2"></i>Start Identification
+        </a>
       </div>
     </div>
   );
@@ -173,10 +251,58 @@ function MainComponent() {
       <h2 className="text-2xl font-bold text-green-800 mb-6">
         Client Management
       </h2>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">Add New Client</h3>
+          <p className="text-gray-600 mb-4">
+            Register a new client and their property details
+          </p>
+          <a
+            href="/create-client"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 inline-block"
+          >
+            <i className="fas fa-user-plus mr-2"></i>Add Client
+          </a>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">View All Clients</h3>
+          <p className="text-gray-600 mb-4">
+            Browse and manage your client database
+          </p>
+          <a
+            href="/list-clients"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block"
+          >
+            <i className="fas fa-users mr-2"></i>View Clients
+          </a>
+        </div>
+      </div>
+
+      {/* Client Stats */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <p className="text-gray-600">
-          Client management feature coming soon...
-        </p>
+        <h3 className="text-lg font-semibold mb-4">Client Overview</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="text-center">
+            <p className="text-2xl font-bold text-green-600">
+              {clients.length}
+            </p>
+            <p className="text-gray-600">Total Clients</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-blue-600">
+              {clients.filter((c) => c.last_service_date).length}
+            </p>
+            <p className="text-gray-600">Active Clients</p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-yellow-600">
+              {clients.filter((c) => c.pet_friendly_required).length}
+            </p>
+            <p className="text-gray-600">Pet-Friendly Required</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -186,10 +312,102 @@ function MainComponent() {
       <h2 className="text-2xl font-bold text-green-800 mb-6">
         Service Scheduling
       </h2>
+
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">Schedule New Service</h3>
+          <p className="text-gray-600 mb-4">
+            Book a service appointment for a client
+          </p>
+          <a
+            href="/create-scheduled-service"
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 inline-block"
+          >
+            <i className="fas fa-calendar-plus mr-2"></i>Schedule Service
+          </a>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold mb-4">View Schedule</h3>
+          <p className="text-gray-600 mb-4">
+            See all upcoming and past services
+          </p>
+          <a
+            href="/list-scheduled-services"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block"
+          >
+            <i className="fas fa-calendar mr-2"></i>View Schedule
+          </a>
+        </div>
+      </div>
+
+      {/* Today's Schedule Preview */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <p className="text-gray-600">
-          Service scheduling feature coming soon...
+        <h3 className="text-lg font-semibold mb-4">Today's Schedule</h3>
+        <p className="text-gray-500">
+          Schedule preview coming soon - visit the full schedule page to manage
+          appointments.
         </p>
+      </div>
+    </div>
+  );
+
+  const renderMeasurement = () => (
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-green-800 mb-6">
+        Property Measurement
+      </h2>
+
+      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h3 className="text-lg font-semibold mb-4">Measure Properties</h3>
+        <p className="text-gray-600 mb-4">
+          Use our integrated mapping tool to measure lawn and landscape areas
+          accurately
+        </p>
+        <a
+          href="/measure-property"
+          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 inline-block"
+        >
+          <i className="fas fa-ruler-combined mr-2"></i>Open Measurement Tool
+        </a>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h4 className="font-semibold mb-3">Features</h4>
+          <ul className="space-y-2 text-sm text-gray-600">
+            <li>
+              <i className="fas fa-check text-green-600 mr-2"></i>Satellite map
+              view
+            </li>
+            <li>
+              <i className="fas fa-check text-green-600 mr-2"></i>Draw area
+              polygons
+            </li>
+            <li>
+              <i className="fas fa-check text-green-600 mr-2"></i>Measure
+              distances
+            </li>
+            <li>
+              <i className="fas fa-check text-green-600 mr-2"></i>Calculate
+              total square footage
+            </li>
+            <li>
+              <i className="fas fa-check text-green-600 mr-2"></i>Save
+              measurements for clients
+            </li>
+          </ul>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h4 className="font-semibold mb-3">How to Use</h4>
+          <ol className="space-y-2 text-sm text-gray-600">
+            <li>1. Search for the property address</li>
+            <li>2. Use polygon tool to outline areas</li>
+            <li>3. Review calculated square footage</li>
+            <li>4. Link to client (optional)</li>
+            <li>5. Save for future reference</li>
+          </ol>
+        </div>
       </div>
     </div>
   );
@@ -216,6 +434,11 @@ function MainComponent() {
                   icon: "fas fa-tachometer-alt",
                 },
                 { id: "pricing", label: "Pricing", icon: "fas fa-calculator" },
+                {
+                  id: "measurement",
+                  label: "Measure",
+                  icon: "fas fa-ruler-combined",
+                },
                 { id: "ai", label: "AI ID", icon: "fas fa-camera" },
                 { id: "crm", label: "CRM", icon: "fas fa-users" },
                 { id: "schedule", label: "Schedule", icon: "fas fa-calendar" },
@@ -245,6 +468,7 @@ function MainComponent() {
       <main>
         {activeTab === "dashboard" && renderDashboard()}
         {activeTab === "pricing" && renderPricingCalculator()}
+        {activeTab === "measurement" && renderMeasurement()}
         {activeTab === "ai" && renderAIIdentification()}
         {activeTab === "crm" && renderCRM()}
         {activeTab === "schedule" && renderScheduling()}
