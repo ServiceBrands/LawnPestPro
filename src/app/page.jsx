@@ -447,14 +447,16 @@ function MainComponent() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-3 py-2 md:px-4 md:py-2 rounded-lg flex items-center space-x-2 transition-colors ${
+                  className={`px-2 py-2 md:px-4 md:py-2 rounded-lg flex items-center space-x-1 md:space-x-2 transition-colors whitespace-nowrap ${
                     activeTab === tab.id
                       ? "bg-green-600 text-white"
                       : "text-white hover:bg-green-600"
                   }`}
                 >
-                  <i className={`${tab.icon} text-white`}></i>
-                  <span className="hidden md:inline text-white">
+                  <i
+                    className={`${tab.icon} text-white text-sm md:text-base`}
+                  ></i>
+                  <span className="text-xs md:text-sm text-white">
                     {tab.label}
                   </span>
                 </button>
