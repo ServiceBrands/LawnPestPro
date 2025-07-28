@@ -6,6 +6,7 @@ function MainComponent() {
   const [clients, setClients] = React.useState([]);
   const [services, setServices] = React.useState([]);
   const [estimates, setEstimates] = React.useState([]);
+  const [scheduledServices, setScheduledServices] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   // Load initial data
@@ -13,6 +14,7 @@ function MainComponent() {
     loadClients();
     loadServices();
     loadEstimates();
+    loadScheduledServices();
   }, []);
 
   const loadClients = async () => {
@@ -48,6 +50,20 @@ function MainComponent() {
       }
     } catch (error) {
       console.error("Error loading estimates:", error);
+    }
+  };
+
+  const loadScheduledServices = async () => {
+    try {
+      const response = await fetch("/api/scheduled-services/list", {
+        method: "POST",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setScheduledServices(data || []);
+      }
+    } catch (error) {
+      console.error("Error loading scheduled services:", error);
     }
   };
 
